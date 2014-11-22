@@ -1,0 +1,29 @@
+{
+  "name": "gifify",
+  "version": "0.0.0",
+  "description": "Convert any video file to an optimized animated GIF",
+  "main": "index.js",
+  "bin": {
+    "gifify": "bin/gifify"
+  },
+  "scripts": {
+    "example": "node ./example/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vvo/gifify.git"
+  },
+  "author": "Vincent Voyer <vincent@zeroload.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvo/gifify/issues"
+  },
+  "homepage": "https://github.com/vvo/gifify",
+  "dependencies": {
+    "commander": "^2.4.0",
+    "moment": "^2.8.3",
+    "moment-duration-format": "^1.3.0",
+    "promise": "^6.0.1",
+    "whereis": "^0.4.0"
+  }
+}

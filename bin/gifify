@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+var program = require('commander');
+
+var gifify = require('../');
+
+var options =
+  program
+    .version(require('../package.json').version)
+    .usage('[options] [file]')
+    .option('--fps <n>', 'Frames Per Second, defaults to 10', parseFloat, 10)
+    .option('--from <position>', 'Start position, hh:mm:ss or seconds, defaults to 0')
+    .option('--colors <n>', 'Number of colors, up to 255, defaults to 80', parseFloat, 80)
+    .option('--compress <n>', 'Compression (quality) level, from 0 (no compression) to 100, defaults to 40', 40)
+    .option('-o, --output <file>', 'Output file, defaults to stdout')
+    .option('--resize <W:H>', 'Resize output, use -1 when specifying only width or height. `350:100`, `400:-1`, `-1:200`')
+    .option('--speed <n>', 'Movie speed, defaults to 1', parseFloat, 1)
+    .option('--to <position>', 'End position, hh:mm:ss or seconds, defaults to end of movie'
+    )
+    .parse(process.argv);
+
+// we can only deal with one gif at a time
+if (options.args.length > 1) {
+  program.help();
+}
+
+encode();
+
+function encode() {
+  var outputStream;
+  if (options.output !== undefined) {
+    outputStream = fs.createWriteStream(path.resolve(process.cwd(), options.output));
+  } else {
+    outputStream = process.stdout;
+  }
+
+  var inputStream;
+  if (options.args[0] !== undefined) {
+    inputStream = fs.createReadStream(path.resolve(process.cwd(), options.args[0]));
+  } else {
+    inputStream = process.stdin;
+  }
+
+  gifify(inputStream, options, function gotStream(err, gifStream) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    gifStream.pipe(outputStream);
+  });
+
+  inputStream.on('error', process.stderr.write.bind(process.stderr));
+  inputStream.on('error', process.exit.bind(process, 1));
+}
