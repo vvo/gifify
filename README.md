@@ -1,9 +1,18 @@
 # gifify [![Dependency Status](http://img.shields.io/david/vvo/gifify.svg?style=flat-square)](https://david-dm.org/vvo/gifify)
 
-Convert any video file to an optimized animated GIF. Either in it's full length or just some part.
+Convert any video file to an optimized animated GIF. Either in it's full length or only a part of it.
 
 It's like [jclem/gifify](https://github.com/jclem/gifify/) but better in many ways from my point of view.
 
+## Demo time
+
+![screencast](screencast.gif)
+
+This screencast was recorded with [lolilolicon/FFcast](https://github.com/lolilolicon/FFcast) then converted to a GIF with:
+
+```shell
+gifify screencast.mkv -o screencast.gif --resize 800:-1
+```
 
 ## Features
 
@@ -25,7 +34,7 @@ Before using gifify, please install:
 - [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/)
 - [pornel/giflossy](https://github.com/pornel/giflossy), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork
 
-## Install
+## Installation
 
 ```shell
 npm install -g gifify

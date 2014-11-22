@@ -74,7 +74,7 @@ function computeFFmpegArgs(opts) {
   // FFmpeg options
   // https://www.ffmpeg.org/ffmpeg.html#Options
   var args = [
-    '-loglevel', 'quiet'
+    '-loglevel', 'warning'
   ];
 
   // fast seek to opts.from - 500ms
@@ -96,14 +96,15 @@ function computeFFmpegArgs(opts) {
 
   // resize filter
   if (opts.resize !== undefined) {
-    args.push('-vf', 'scale=' + opts.resize + ',subtitles=22.srt');
+    args.push('-vf', 'scale=' + opts.resize);
   }
 
   // encoding filter and codec
   args.push('-f', 'image2pipe', '-vcodec', 'ppm');
 
   // force video sync so that even if nothing moves in the video, we get a constant frame rate
-  args.push('-vsync', '1');
+  // seems buggy, not what I want, still, some videos are failing to encode
+  // args.push('-vsync', '1');
 
   // write on stdout
   args.push('pipe:1');
