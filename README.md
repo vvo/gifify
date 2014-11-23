@@ -98,7 +98,7 @@ gifify(movie, options, function done(err, gifReadStream) {
 On modern hardware GIF is the slowest and most expensive video codec. Can we please allow it to be obsoleted?
 ```
 
-https://pornel.net/efficient-gifs
+https://pornel.net/efficient-gifs#sec44
 
 YOLO!
 
