@@ -92,6 +92,16 @@ gifify(movie, options, function done(err, gifReadStream) {
 });
 ```
 
+## Disclaimer
+
+```
+On modern hardware GIF is the slowest and most expensive video codec. Can we please allow it to be obsoleted?
+```
+
+https://pornel.net/efficient-gifs
+
+YOLO!
+
 ## Notes
 
 [Giflossy](https://github.com/pornel/giflossy) is a fork of [gifsicle](www.lcdf.org/gifsicle/), gifsicle author is currently [working on](https://github.com/kohler/gifsicle/tree/lossy) integrating the lossy part in gifsicle.
