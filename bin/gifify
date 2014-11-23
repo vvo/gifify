@@ -26,6 +26,11 @@ if (options.args.length > 1) {
   program.help();
 }
 
+// show help if user only typed "gifify" without piping to it or specifying an input file
+if (process.stdin.isTTY && options.args.length === 0) {
+  program.help();
+}
+
 encode();
 
 function encode() {
