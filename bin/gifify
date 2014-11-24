@@ -41,22 +41,26 @@ function encode() {
     outputStream = process.stdout;
   }
 
-  var inputStream;
-  if (options.args[0] !== undefined) {
-    inputStream = fs.createReadStream(path.resolve(process.cwd(), options.args[0]));
+  var input;
+
+  if (options.args[0] === undefined) {
+    // we got piped!
+    input = process.stdin;
   } else {
-    inputStream = process.stdin;
+    input = path.resolve(process.cwd(), options.args[0]);
   }
 
-  gifify(inputStream, options, function gotStream(err, gifStream) {
+  gifify(input, options, function gotStream(err, gifStream) {
     if (err) {
       console.error(err);
       return;
     }
 
     gifStream.pipe(outputStream);
+    gifStream.on('error', process.stderr.write.bind(process.stderr));
+    gifStream.on('error', process.exit.bind(process, 1));
   });
 
-  inputStream.on('error', process.stderr.write.bind(process.stderr));
-  inputStream.on('error', process.exit.bind(process, 1));
+  outputStream.on('error', process.stderr.write.bind(process.stderr));
+  outputStream.on('error', process.exit.bind(process, 1));
 }

@@ -7,10 +7,14 @@ require('moment-duration-format');
 
 module.exports = Promise.nodeify(gifify);
 
-function gifify(stream, opts) {
+function gifify(streamOrFile, opts) {
   return checkRequirements().then(createEncodingStream);
 
   function createEncodingStream() {
+    if (typeof streamOrFile === 'string') {
+      opts.inputFilePath = streamOrFile;
+    }
+
     if (opts.fps === undefined) {
       opts.fps = 10;
     }
@@ -46,9 +50,10 @@ function gifify(stream, opts) {
     var gifsicle = spawn('gifsicle', gifsicleArgs);
 
     [ffmpeg, convert, gifsicle].forEach(function handleErrors(child) {
-      child.on('error', stream.emit.bind(stream, 'error'));
+      child.on('error', gifsicle.emit.bind(gifsicle, 'error'));
       child.stderr.on('data', function gotSomeErrors(buf) {
-        stream.emit('error', buf.toString());
+        // emit errors on the resolved stream
+        gifsicle.stdout.emit('error', buf.toString());
       });
     });
 
@@ -61,7 +66,10 @@ function gifify(stream, opts) {
     // gifsicle.stdin.on('error', function() {});
     // gifsicle.stdout.on('error', function() {})
 
-    stream.pipe(ffmpeg.stdin);
+    if (!opts.inputFilePath) {
+      streamOrFile.pipe(ffmpeg.stdin);
+    }
+
     ffmpeg.stdout.pipe(convert.stdin);
     convert.stdout.pipe(gifsicle.stdin);
     return Promise.resolve(gifsicle.stdout);
@@ -83,9 +91,13 @@ function computeFFmpegArgs(opts) {
     args.push('-ss', duration(opts.from).format(FFmpegTimeFormat, {trim: false}));
   }
 
-  // stdin as input
-  // https://www.ffmpeg.org/ffmpeg-protocols.html#pipe
-  args.push('-i', 'pipe:0');
+  if (opts.inputFilePath) {
+    args.push('-i', opts.inputFilePath);
+  } else {
+    // stdin as input
+    // https://www.ffmpeg.org/ffmpeg-protocols.html#pipe
+    args.push('-i', 'pipe:0');
+  }
 
   if (opts.to !== undefined) {
     args.push('-to', duration(opts.to).subtract(duration(opts.from)).format(FFmpegTimeFormat, {trim: false}));
