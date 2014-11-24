@@ -1,6 +1,6 @@
 {
   "name": "gifify",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Convert any video file to an optimized animated GIF",
   "main": "index.js",
   "bin": {
