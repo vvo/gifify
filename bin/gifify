@@ -10,10 +10,10 @@ var options =
   program
     .version(require('../package.json').version)
     .usage('[options] [file]')
-    .option('--fps <n>', 'Frames Per Second, defaults to 10', parseFloat, 10)
-    .option('--from <position>', 'Start position, hh:mm:ss or seconds, defaults to 0')
     .option('--colors <n>', 'Number of colors, up to 255, defaults to 80', parseFloat, 80)
     .option('--compress <n>', 'Compression (quality) level, from 0 (no compression) to 100, defaults to 40', 40)
+    .option('--from <position>', 'Start position, hh:mm:ss or seconds, defaults to 0')
+    .option('--fps <n>', 'Frames Per Second, defaults to 10', parseFloat, 10)
     .option('-o, --output <file>', 'Output file, defaults to stdout')
     .option('--resize <W:H>', 'Resize output, use -1 when specifying only width or height. `350:100`, `400:-1`, `-1:200`')
     .option('--speed <n>', 'Movie speed, defaults to 1', parseFloat, 1)
