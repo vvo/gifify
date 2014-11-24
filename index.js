@@ -82,7 +82,7 @@ function computeFFmpegArgs(opts) {
   // FFmpeg options
   // https://www.ffmpeg.org/ffmpeg.html#Options
   var args = [
-    '-loglevel', 'warning'
+    '-loglevel', 'panic'
   ];
 
   // fast seek to opts.from - 500ms
@@ -106,10 +106,20 @@ function computeFFmpegArgs(opts) {
   // framerate
   args.push('-r', opts.fps);
 
+  // filters
+  args.push('-vf');
+
+  var filters = [];
   // resize filter
   if (opts.resize !== undefined) {
-    args.push('-vf', 'scale=' + opts.resize);
+    filters.push('scale=' + opts.resize);
   }
+
+  if (opts.subtitles !== undefined) {
+    filters.push('subtitles=' + opts.subtitles);
+  }
+
+  args.push(filters.join(','));
 
   // encoding filter and codec
   args.push('-f', 'image2pipe', '-vcodec', 'ppm');
