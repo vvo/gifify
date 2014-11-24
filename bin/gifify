@@ -3,6 +3,8 @@
 var fs = require('fs');
 var path = require('path');
 var program = require('commander');
+var Promise = require('promise');
+var whereis = require('whereis');
 
 var gifify = require('../');
 
@@ -32,7 +34,15 @@ if (process.stdin.isTTY && options.args.length === 0) {
   program.help();
 }
 
-encode();
+// main program logic
+checkRequirements()
+  .then(encode)
+  .catch(abort);
+
+function abort(err) {
+  console.error(err);
+  process.exit(1);
+}
 
 function encode() {
   var outputStream;
@@ -49,19 +59,31 @@ function encode() {
     input = process.stdin;
   } else {
     input = path.resolve(process.cwd(), options.args[0]);
-  }
-
-  gifify(input, options, function gotStream(err, gifStream) {
-    if (err) {
-      console.error(err);
+    if (!fs.existsSync(input)) {
+      abort(new Error('Could not find: ' + input));
       return;
     }
+  }
 
-    gifStream.pipe(outputStream);
-    gifStream.on('error', process.stderr.write.bind(process.stderr));
-    gifStream.on('error', process.exit.bind(process, 1));
+  var gifStream = gifify(input, options);
+  gifStream.pipe(outputStream);
+  gifStream.on('error', abort.bind(null));
+  outputStream.on('error', abort.bind(null));
+}
+
+function checkRequirements() {
+  var requirements = ['ffmpeg', 'convert', 'gifsicle'];
+  return Promise.all(requirements.map(findRequirement));
+}
+
+function findRequirement(programName) {
+  return new Promise(function find(resolve, reject) {
+    whereis(programName, function found(err) {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve();
+    });
   });
-
-  outputStream.on('error', process.stderr.write.bind(process.stderr));
-  outputStream.on('error', process.exit.bind(process, 1));
 }

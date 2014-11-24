@@ -1,79 +1,75 @@
 var duration = require('moment').duration;
-var Promise = require('promise');
 var spawn = require('child_process').spawn;
-var whereis = require('whereis');
 
 require('moment-duration-format');
 
-module.exports = Promise.nodeify(gifify);
+var debug = require('debug')('gifify');
+
+module.exports = gifify;
 
 function gifify(streamOrFile, opts) {
-  return checkRequirements().then(createEncodingStream);
-
-  function createEncodingStream() {
-    if (typeof streamOrFile === 'string') {
-      opts.inputFilePath = streamOrFile;
-    }
-
-    if (opts.fps === undefined) {
-      opts.fps = 10;
-    }
-
-    if (opts.speed === undefined) {
-      opts.speed = 1;
-    }
-
-    if (opts.colors === undefined) {
-      opts.colors = 80;
-    }
-
-    if (opts.compress === undefined) {
-      opts.compress = 40;
-    }
-
-    if (opts.from !== undefined && typeof opts.from === 'number' ||
-      typeof opts.from === 'string' && opts.from.indexOf(':') === -1) {
-      opts.from = parseFloat(opts.from) * 1000;
-    }
-
-    if (opts.to !== undefined && typeof opts.to === 'number' ||
-      typeof opts.to === 'string' && opts.to.indexOf(':') === -1) {
-      opts.to = parseFloat(opts.to) * 1000;
-    }
-
-    var ffmpegArgs = computeFFmpegArgs(opts);
-    var convertArgs = computeConvertArgs(opts);
-    var gifsicleArgs = computeGifsicleArgs(opts);
-
-    var ffmpeg = spawn('ffmpeg', ffmpegArgs);
-    var convert = spawn('convert', convertArgs);
-    var gifsicle = spawn('gifsicle', gifsicleArgs);
-
-    [ffmpeg, convert, gifsicle].forEach(function handleErrors(child) {
-      child.on('error', gifsicle.emit.bind(gifsicle, 'error'));
-      child.stderr.on('data', function gotSomeErrors(buf) {
-        // emit errors on the resolved stream
-        gifsicle.stdout.emit('error', buf.toString());
-      });
-    });
-
-    // https://github.com/joyent/node/issues/8652
-    ffmpeg.stdin.on('error', function ignoreStdinError(){});
-
-    // ffmpeg.stdout.on('error', function() {})
-    // convert.stdin.on('error', function(){});
-    // convert.stdout.on('error', function() {});
-    // gifsicle.stdin.on('error', function() {});
-    // gifsicle.stdout.on('error', function() {})
-
-    if (!opts.inputFilePath) {
-      streamOrFile.pipe(ffmpeg.stdin);
-    }
-
-    ffmpeg.stdout.pipe(convert.stdin);
-    convert.stdout.pipe(gifsicle.stdin);
-    return Promise.resolve(gifsicle.stdout);
+  if (typeof streamOrFile === 'string') {
+    opts.inputFilePath = streamOrFile;
   }
+
+  if (opts.fps === undefined) {
+    opts.fps = 10;
+  }
+
+  if (opts.speed === undefined) {
+    opts.speed = 1;
+  }
+
+  if (opts.colors === undefined) {
+    opts.colors = 80;
+  }
+
+  if (opts.compress === undefined) {
+    opts.compress = 40;
+  }
+
+  if (opts.from !== undefined && typeof opts.from === 'number' ||
+    typeof opts.from === 'string' && opts.from.indexOf(':') === -1) {
+    opts.from = parseFloat(opts.from) * 1000;
+  }
+
+  if (opts.to !== undefined && typeof opts.to === 'number' ||
+    typeof opts.to === 'string' && opts.to.indexOf(':') === -1) {
+    opts.to = parseFloat(opts.to) * 1000;
+  }
+
+  var ffmpegArgs = computeFFmpegArgs(opts);
+  var convertArgs = computeConvertArgs(opts);
+  var gifsicleArgs = computeGifsicleArgs(opts);
+
+  var ffmpeg = spawn('ffmpeg', ffmpegArgs);
+  var convert = spawn('convert', convertArgs);
+  var gifsicle = spawn('gifsicle', gifsicleArgs);
+
+  [ffmpeg, convert, gifsicle].forEach(function handleErrors(child) {
+    child.on('error', gifsicle.emit.bind(gifsicle, 'error'));
+    child.stderr.on('data', function gotSomeErrors(buf) {
+      // emit errors on the resolved stream
+      gifsicle.stdout.emit('error', buf.toString());
+    });
+  });
+
+  // https://github.com/joyent/node/issues/8652
+  ffmpeg.stdin.on('error', function ignoreStdinError(){});
+
+  // ffmpeg.stdout.on('error', function() {})
+  // convert.stdin.on('error', function(){});
+  // convert.stdout.on('error', function() {});
+  // gifsicle.stdin.on('error', function() {});
+  // gifsicle.stdout.on('error', function() {})
+
+  if (!opts.inputFilePath) {
+    streamOrFile.pipe(ffmpeg.stdin);
+  }
+
+  ffmpeg.stdout.pipe(convert.stdin);
+  convert.stdout.pipe(gifsicle.stdin);
+  return gifsicle.stdout;
 }
 
 function computeFFmpegArgs(opts) {
@@ -106,20 +102,22 @@ function computeFFmpegArgs(opts) {
   // framerate
   args.push('-r', opts.fps);
 
-  // filters
-  args.push('-vf');
+  if (opts.resize || opts.subtitles) {
+    // filters
+    args.push('-vf');
 
-  var filters = [];
-  // resize filter
-  if (opts.resize !== undefined) {
-    filters.push('scale=' + opts.resize);
+    var filters = [];
+    // resize filter
+    if (opts.resize) {
+      filters.push('scale=' + opts.resize);
+    }
+
+    if (opts.subtitles !== undefined) {
+      filters.push('subtitles=' + opts.subtitles);
+    }
+
+    args.push(filters.join(','));
   }
-
-  if (opts.subtitles !== undefined) {
-    filters.push('subtitles=' + opts.subtitles);
-  }
-
-  args.push(filters.join(','));
 
   // encoding filter and codec
   args.push('-f', 'image2pipe', '-vcodec', 'ppm');
@@ -130,6 +128,8 @@ function computeFFmpegArgs(opts) {
 
   // write on stdout
   args.push('pipe:1');
+
+  debug('ffmpeg args: %j', args);
 
   return args;
 }
@@ -145,6 +145,8 @@ function computeConvertArgs(opts) {
     'gif:-'
   ];
 
+  debug('convert args: %j', args);
+
   return args;
 }
 
@@ -159,22 +161,7 @@ function computeGifsicleArgs(opts) {
     '--no-warnings'
   ];
 
+  debug('gifsicle args: %j', args);
+
   return args;
-}
-
-function checkRequirements() {
-  var requirements = ['ffmpeg', 'convert', 'gifsicle'];
-  return Promise.all(requirements.map(findRequirement));
-}
-
-function findRequirement(programName) {
-  return new Promise(function find(resolve, reject) {
-    whereis(programName, function found(err) {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve();
-    });
-  });
 }
