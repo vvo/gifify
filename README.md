@@ -137,6 +137,8 @@ Dialogue: 0,0:00:02.50,0:00:03.97,Default,,0,0,0,,{\fnLiberation Sans\fs40}Okay,
 Dialogue: 0,0:00:05.00,0:00:06.90,Default,,0,0,0,,{\fnLiberation Sans\fs40}Okay. Okay.
 ```
 
+Result extracting a GIF from [22 Jump Street](http://www.imdb.com/title/tt2294449/):
+
 ![22](22.gif)
 
 ## GIF Performance
