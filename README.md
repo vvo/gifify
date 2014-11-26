@@ -153,7 +153,7 @@ YOLO!
 
 ## Giflossy
 
-[Giflossy](https://github.com/pornel/giflossy) is a fork of [gifsicle](www.lcdf.org/gifsicle/), gifsicle author is currently [working on](https://github.com/kohler/gifsicle/tree/lossy) integrating the lossy part in gifsicle.
+[Giflossy](https://github.com/pornel/giflossy) is a fork of [gifsicle](http://www.lcdf.org/gifsicle/), gifsicle author is currently [working on](https://github.com/kohler/gifsicle/tree/lossy) integrating the lossy part in gifsicle.
 
 So in little time we will be able to directly use gifsicle and gifiscle packages.
 
