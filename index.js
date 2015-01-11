@@ -136,14 +136,26 @@ function computeFFmpegArgs(opts) {
 
 function computeConvertArgs(opts) {
   // Convert options
-  // http://www.imagemagick.org/script/convert.php#options
+  // http://www.imagemagick.rg/script/convert.php#options
   var args = [
     '-',
     '+dither',
     '-layers', 'Optimize',
     '-delay', 100 / opts.fps / opts.speed,
-    'gif:-'
   ];
+
+  if (opts.text) {
+    args.push(
+      '-gravity', 'South',
+      '-fill', 'white',
+      '-stroke', 'black',
+      '-strokewidth', '1',
+      '-pointsize', '40',
+      '-annotate', '+20+20', opts.text
+    );
+  }
+
+  args.push('gif:-');
 
   debug('convert args: %j', args);
 

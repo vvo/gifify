@@ -20,6 +20,7 @@ var options =
     .option('--resize <W:H>', 'Resize output, use -1 when specifying only width or height. `350:100`, `400:-1`, `-1:200`')
     .option('--speed <n>', 'Movie speed, defaults to 1', parseFloat, 1)
     .option('--subtitles <filepath>', 'Subtitle filepath to burn to the GIF')
+    .option('--text <string>', 'Add some text at the bottom of the movie')
     .option('--to <position>', 'End position, hh:mm:ss or seconds, defaults to end of movie'
     )
     .parse(process.argv);

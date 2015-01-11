@@ -59,6 +59,7 @@ npm install -g gifify
     --resize <W:H>          Resize output, use -1 when specifying only width or height. `350:100`, `400:-1`, `-1:200`
     --speed <n>             Movie speed, defaults to 1
     --subtitles <filepath>  Subtitle filepath to burn to the GIF
+    --text <string>         Add some text at the bottom of the movie
     --to <position>         End position, hh:mm:ss or seconds, defaults to end of movie
 ```
 
@@ -100,6 +101,18 @@ FFmpeg has to read from 0GB -> $START_BYTE_40:20 and discards it. But everything
 When using direct file input from command line, we pass the `-i filename` option to FFmpeg and then it's super fast!
 
 Be careful when `|piping`.
+
+## Adding some text
+
+You can burn some simple text into your GIF:
+
+```shell
+gifify back.mp4 -o back.gif --from 01:48:23.200 --to 01:48:25.300 --text "What?..What?What?"
+```
+
+Result:
+
+![back](back.gif)
 
 ## Subtitles
 
