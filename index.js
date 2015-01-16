@@ -96,7 +96,7 @@ function computeFFmpegArgs(opts) {
   }
 
   if (opts.to !== undefined) {
-    args.push('-to', duration(opts.to).subtract(duration(opts.from)).format(FFmpegTimeFormat, {trim: false}));
+    args.push('-to', duration(opts.to).format(FFmpegTimeFormat, {trim: false}));
   }
 
   // framerate
