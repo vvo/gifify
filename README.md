@@ -1,5 +1,7 @@
 # gifify [![Dependency Status](http://img.shields.io/david/vvo/gifify.svg?style=flat-square)](https://david-dm.org/vvo/gifify)
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vvo/gifify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Convert any video file to an optimized animated GIF. Either in it's full length or only a part of it.
 
 It's like [jclem/gifify](https://github.com/jclem/gifify/) but better in many ways from my point of view.
