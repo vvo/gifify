@@ -34,7 +34,7 @@ Before using gifify, please install:
 
 - [FFmpeg](http://ffmpeg.org/) [🐓🐓🐓🐓](http://en.wikipedia.org/wiki/FFmpeg#History)
 - [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/)
-- [pornel/giflossy](https://github.com/pornel/giflossy/releases/tag/lossy%2F1.82.1), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork
+- [pornel/giflossy](https://github.com/pornel/giflossy/releases), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork
 
 ## Installation
 
