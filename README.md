@@ -36,6 +36,8 @@ Before using gifify, please install:
 - [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/)
 - [pornel/giflossy](https://github.com/pornel/giflossy/releases), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork
 
+You can also use the [gifify Docker image](https://github.com/maxogden/gifify-docker) which comes with everything installed.
+
 ## Installation
 
 ```shell
