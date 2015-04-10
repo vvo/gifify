@@ -5,6 +5,8 @@ var path = require('path');
 var program = require('commander');
 var Promise = require('promise');
 var whereis = require('whereis');
+var exec = require('child_process').exec;
+var util = require('util');
 
 var gifify = require('../');
 
@@ -72,19 +74,43 @@ function encode() {
   outputStream.on('error', abort.bind(null));
 }
 
-function checkRequirements() {
-  var requirements = ['ffmpeg', 'convert', 'gifsicle'];
-  return Promise.all(requirements.map(findRequirement));
+function ansiRed(string) {
+  return "\033[31m" + string + "\033[91m";
+}
+function notInstalledMessage(command) {
+  return ansiRed(util.format("\tCould not find %s. Is it installed?", command));
 }
 
-function findRequirement(programName) {
-  return new Promise(function find(resolve, reject) {
-    whereis(programName, function found(err) {
-      if (err) {
-        return reject(err);
-      }
+function missingDependency(command, dependencies) {
+  return ansiRed(util.format("\t%s needs %s", command, dependencies.join(", ")));
+}
 
-      resolve();
+// This will check both if the required applications are installed, and if they
+// are installed with the correct dependencies. For example, to make subtitles
+// work, ffmpeg needs to be compiled with `enable-libass`.
+function checkRequirements() {
+  var required = {
+    'ffmpeg': { 'args' : '-version', 'needs': ['enable-libass', 'enable-libfontconfig'] },
+    'convert': { 'args': '--version', 'needs': ['fontconfig'] },
+    'gifsicle': { 'args': '-h', 'needs': ['lossy'] }
+  }
+  var promises = Object.keys(required).map(function (key) {
+    var options = required[key];
+    return new Promise(function find(resolve, reject) {
+      exec([key, options['args']].join(' '), function(error, stdout, stderr) {
+        if (error) return reject(notInstalledMessage(key));
+
+        var ok = (options['needs'] || []).every(function(req) {
+          return new RegExp(req, 'i').test(stdout);
+        });
+        if (ok) {
+          return resolve();
+        } else {
+          return reject(missingDependency(key, options['needs']));
+        }
+      });
     });
   });
+
+  return Promise.all(promises);
 }
