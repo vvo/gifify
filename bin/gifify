@@ -87,28 +87,34 @@ function missingDependency(command, dependencies) {
 // are installed with the correct dependencies. For example, to make subtitles
 // work, ffmpeg needs to be compiled with `enable-libass`.
 function checkRequirements() {
-  var required = {
-    'ffmpegx': { 'args' : '-version', 'needs': ['enable-libass', 'enable-libfontconfig'] },
-    'convert': { 'args': '--version', 'needs': ['fontconfig'] },
-    'gifsicle': { 'args': '-h', 'needs': ['lossy'] }
-  }
-  var promises = Object.keys(required).map(function (key) {
-    var options = required[key];
-    return new Promise(function find(resolve, reject) {
-      exec([key, options['args']].join(' '), function(error, stdout, stderr) {
-        if (error) return reject(notInstalledMessage(key));
+  var required = [
+    {'bin': 'ffmpeg', 'args' : '-version', 'needs': ['enable-libass', 'enable-libfontconfig']},
+    {'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']},
+    {'bin': 'gifsicle', 'args': '-h', 'needs': ['lossy']}
+  ]
 
-        var ok = (options['needs'] || []).every(function(req) {
-          return new RegExp(req, 'i').test(stdout);
-        });
-        if (ok) {
-          return resolve();
-        } else {
-          return reject(missingDependency(key, options['needs']));
-        }
-      });
+  return Promise.all(required.map(checkRequirement));
+}
+
+// Takes a `obj` which should have three keys available:
+//       bin - The name of the binary to execute
+//       args - The arguments that are passed to the binary
+//       needs - Strings to look for in the output of `bin` fed `args`
+//
+// Returns a Promise
+function checkRequirement(obj) {
+  return new Promise(function find(resolve, reject) {
+    exec([obj.bin, obj.args].join(' '), function(error, stdout, stderr) {
+      if (error) return reject(notInstalledMessage(obj.bin));
+
+      var ok = (obj.needs || []).every(function(req) {
+                 return new RegExp(req, 'i').test(stdout);
+               });
+      if (ok) {
+        return resolve();
+      } else {
+        return reject(missingDependency(obj.bin, obj.needs));
+      }
     });
   });
-
-  return Promise.all(promises);
 }
