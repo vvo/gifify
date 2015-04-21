@@ -76,11 +76,12 @@ function encode() {
 }
 
 function notInstalledMessage(command) {
-  return colors.red(util.format("\tCould not find %s. Is it installed?", command));
+  var readMe = "https://github.com/vvo/gifify#requirements";
+  return colors.red(util.format("Could not find %s. Is it installed?\n\nMore info: %s", command, readMe));
 }
 
 function missingDependency(command, dependencies) {
-  return colors.red(util.format("\t%s needs %s", command, dependencies.join(", ")));
+  return colors.red(util.format("%s needs %s", command, dependencies.join(", ")));
 }
 
 // This will check both if the required applications are installed, and if they
