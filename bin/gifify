@@ -7,6 +7,7 @@ var Promise = require('promise');
 var whereis = require('whereis');
 var exec = require('child_process').exec;
 var util = require('util');
+var colors = require('colors');
 
 var gifify = require('../');
 
@@ -74,15 +75,12 @@ function encode() {
   outputStream.on('error', abort.bind(null));
 }
 
-function ansiRed(string) {
-  return "\033[31m" + string + "\033[91m";
-}
 function notInstalledMessage(command) {
-  return ansiRed(util.format("\tCould not find %s. Is it installed?", command));
+  return colors.red(util.format("\tCould not find %s. Is it installed?", command));
 }
 
 function missingDependency(command, dependencies) {
-  return ansiRed(util.format("\t%s needs %s", command, dependencies.join(", ")));
+  return colors.red(util.format("\t%s needs %s", command, dependencies.join(", ")));
 }
 
 // This will check both if the required applications are installed, and if they
@@ -90,7 +88,7 @@ function missingDependency(command, dependencies) {
 // work, ffmpeg needs to be compiled with `enable-libass`.
 function checkRequirements() {
   var required = {
-    'ffmpeg': { 'args' : '-version', 'needs': ['enable-libass', 'enable-libfontconfig'] },
+    'ffmpegx': { 'args' : '-version', 'needs': ['enable-libass', 'enable-libfontconfig'] },
     'convert': { 'args': '--version', 'needs': ['fontconfig'] },
     'gifsicle': { 'args': '-h', 'needs': ['lossy'] }
   }
