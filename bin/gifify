@@ -5,6 +5,9 @@ var path = require('path');
 var program = require('commander');
 var Promise = require('promise');
 var whereis = require('whereis');
+var exec = require('child_process').exec;
+var util = require('util');
+var colors = require('colors');
 
 var gifify = require('../');
 
@@ -72,19 +75,47 @@ function encode() {
   outputStream.on('error', abort.bind(null));
 }
 
-function checkRequirements() {
-  var requirements = ['ffmpeg', 'convert', 'gifsicle'];
-  return Promise.all(requirements.map(findRequirement));
+function notInstalledMessage(command) {
+  var readMe = "https://github.com/vvo/gifify#requirements";
+  return colors.red(util.format("Could not find %s. Is it installed?\n\nMore info: %s", command, readMe));
 }
 
-function findRequirement(programName) {
-  return new Promise(function find(resolve, reject) {
-    whereis(programName, function found(err) {
-      if (err) {
-        return reject(err);
-      }
+function missingDependency(command, dependencies) {
+  return colors.red(util.format("%s needs %s", command, dependencies.join(", ")));
+}
 
-      resolve();
+// This will check both if the required applications are installed, and if they
+// are installed with the correct dependencies. For example, to make subtitles
+// work, ffmpeg needs to be compiled with `enable-libass`.
+function checkRequirements() {
+  var required = [
+    {'bin': 'ffmpeg', 'args' : '-version', 'needs': ['enable-libass', 'enable-libfontconfig']},
+    {'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']},
+    {'bin': 'gifsicle', 'args': '-h', 'needs': ['lossy']}
+  ]
+
+  return Promise.all(required.map(checkRequirement));
+}
+
+// Takes a `obj` which should have three keys available:
+//       bin - The name of the binary to execute
+//       args - The arguments that are passed to the binary
+//       needs - Strings to look for in the output of `bin` fed `args`
+//
+// Returns a Promise
+function checkRequirement(obj) {
+  return new Promise(function find(resolve, reject) {
+    exec([obj.bin, obj.args].join(' '), function(error, stdout, stderr) {
+      if (error) return reject(notInstalledMessage(obj.bin));
+
+      var ok = (obj.needs || []).every(function(req) {
+                 return new RegExp(req, 'i').test(stdout);
+               });
+      if (ok) {
+        return resolve();
+      } else {
+        return reject(missingDependency(obj.bin, obj.needs));
+      }
     });
   });
 }
