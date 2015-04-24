@@ -1,3 +1,7 @@
+# 2.1.3 (2015-04-24)
+
+  * enhance requirements checks, #26
+
 # 2.1.2 (2015-04-07)
 
   * pin all dependencies, moment broke with moment-duration-format
