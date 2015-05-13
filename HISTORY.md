@@ -1,4 +1,4 @@
-# 2.1.3 (2015-05-13)
+# 2.1.4 (2015-05-13)
 
   * reduce requiremenents string checks because on arch it's not libfontconfig but fontconfig
 
