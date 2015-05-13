@@ -89,7 +89,7 @@ function missingDependency(command, dependencies) {
 // work, ffmpeg needs to be compiled with `enable-libass`.
 function checkRequirements() {
   var required = [
-    {'bin': 'ffmpeg', 'args' : '-version', 'needs': ['enable-libass', 'enable-libfontconfig']},
+    {'bin': 'ffmpeg', 'args' : '-version', 'needs': ['libass', 'fontconfig']},
     {'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']},
     {'bin': 'gifsicle', 'args': '-h', 'needs': ['lossy']}
   ]

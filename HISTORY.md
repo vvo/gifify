@@ -1,3 +1,7 @@
+# UNRELEASED
+
+  * reduce requiremenents string checks because on arch it's not libfontconfig but fontconfig
+
 # 2.1.3 (2015-04-24)
 
   * enhance requirements checks, #26
