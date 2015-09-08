@@ -32,8 +32,8 @@ I believe my gifify has some features that [jclem/gifify](https://github.com/jcl
 
 Before using gifify, please install:
 
-- [FFmpeg](http://ffmpeg.org/) [🐓🐓🐓🐓](http://en.wikipedia.org/wiki/FFmpeg#History) ($ brew install ffmpeg --with-libass --with-fontconfig)
-- [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/) ($ brew install imagemagick --with-fontconfig)
+- [FFmpeg](http://ffmpeg.org/) [🐓🐓🐓🐓](http://en.wikipedia.org/wiki/FFmpeg#History) (`$ brew install ffmpeg --with-libass --with-fontconfig`)
+- [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/) (`$ brew install imagemagick --with-fontconfig`)
 - [pornel/giflossy](https://github.com/pornel/giflossy/releases), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork
 
 You can also use the [gifify Docker image](https://github.com/maxogden/gifify-docker) which comes with everything installed.
