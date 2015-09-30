@@ -140,8 +140,7 @@ function computeConvertArgs(opts) {
   var args = [
     '-',
     '+dither',
-    '-layers', 'Optimize',
-    '-delay', 100 / opts.fps / opts.speed,
+    '-layers', 'Optimize'
   ];
 
   if (opts.text) {
@@ -170,6 +169,7 @@ function computeGifsicleArgs(opts) {
     '-O3',
     '--lossy=' + opts.compress * 2,
     '--colors=' + opts.colors,
+    '--delay', Math.round(100 / opts.fps / opts.speed),
     '--no-warnings'
   ];
 
