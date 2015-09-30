@@ -1,3 +1,7 @@
+# 2.1.5 (2015-09-30)
+
+  * fix: --speed now working (using gifsicle instead of convert)
+
 # 2.1.4 (2015-05-13)
 
   * reduce requiremenents string checks because on arch it's not libfontconfig but fontconfig
