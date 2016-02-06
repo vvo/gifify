@@ -36,6 +36,7 @@ Before using gifify, please install:
 - [FFmpeg](http://ffmpeg.org/) [🐓🐓🐓🐓](http://en.wikipedia.org/wiki/FFmpeg#History) (`$ brew install ffmpeg --with-libass --with-fontconfig`)
 - [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/) (`$ brew install imagemagick --with-fontconfig`)
 - [pornel/giflossy](https://github.com/pornel/giflossy/releases), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork
+  * For Mac OSX - fork the project and run `./configure` then `make install` in the project's root
 
 You can also use the [gifify Docker image](https://github.com/maxogden/gifify-docker) which comes with everything installed.
 
@@ -99,7 +100,7 @@ Gifify supports streams both on command line (`cat movie.mp4 | gifify -o out.gif
 
 While it's super useful in some cases, if you have the file on disk already, you better do `gifify movie.mp4 -o out.gif` or `gifify(filePath, opts).pipe(writableStream)`.
 
-Why? Because piping 3.4GB when you want to cut from 40:20 to 40:22 still takes a loooooot of time and does not gives you any performance benefit. 
+Why? Because piping 3.4GB when you want to cut from 40:20 to 40:22 still takes a loooooot of time and does not gives you any performance benefit.
 
 FFmpeg has to read from 0GB -> $START_BYTE_40:20 and discards it. But everything flows in your memory.
 
@@ -178,4 +179,3 @@ So in little time we will be able to directly use gifsicle and gifiscle packages
 ## Thanks
 
 [jclem/gifify](https://github.com/jclem/gifify/) was a great source of inspiration.
-
