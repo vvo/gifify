@@ -1,10 +1,6 @@
-# gifify [![Dependency Status](http://img.shields.io/david/vvo/gifify.svg?style=flat-square)](https://david-dm.org/vvo/gifify)
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vvo/gifify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# gifify
 
 Convert any video file to an optimized animated GIF. Either in it's full length or only a part of it.
-
-It's like [jclem/gifify](https://github.com/jclem/gifify/) but better in many ways from my point of view.
 
 ## Demo time
 
@@ -17,8 +13,6 @@ gifify screencast.mkv -o screencast.gif --resize 800:-1
 ```
 
 ## Features
-
-I believe my gifify has some features that [jclem/gifify](https://github.com/jclem/gifify/) is lacking, see:
 
 - command line interface
 - programmatic JavaScript ([Node.JS](http://nodejs.org/)) [stream](http://nodejs.org/api/stream.html) interface
@@ -35,8 +29,7 @@ Before using gifify, please install:
 - [Node.js](https://nodejs.or) (`$ brew install node`)
 - [FFmpeg](http://ffmpeg.org/) [🐓🐓🐓🐓](http://en.wikipedia.org/wiki/FFmpeg#History) (`$ brew install ffmpeg --with-libass --with-fontconfig`)
 - [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/) (`$ brew install imagemagick --with-fontconfig`)
-- [pornel/giflossy](https://github.com/pornel/giflossy/releases), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork
-  * For Mac OSX - fork the project and run `./configure` then `make install` in the project's root
+- [pornel/giflossy](https://github.com/pornel/giflossy/releases), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork (waiting for [gifsicle#16](https://github.com/kohler/gifsicle/pull/16) to be merged). Download the zip release file, make the corresponding binary available in your PATH.
 
 You can also use the [gifify Docker image](https://github.com/maxogden/gifify-docker) which comes with everything installed.
 
