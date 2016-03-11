@@ -1,3 +1,7 @@
+# 2.1.6 (2016-03-11)
+
+ * fix: windows comes with fontconfig pre-installed in ImageMagick
+
 # 2.1.5 (2015-09-30)
 
   * fix: --speed now working (using gifsicle instead of convert)
