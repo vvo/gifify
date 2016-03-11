@@ -90,9 +90,14 @@ function missingDependency(command, dependencies) {
 function checkRequirements() {
   var required = [
     {'bin': 'ffmpeg', 'args' : '-version', 'needs': ['libass', 'fontconfig']},
-    {'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']},
     {'bin': 'gifsicle', 'args': '-h', 'needs': ['lossy']}
-  ]
+  ];
+  
+  if(process.platform != 'win32') {
+    required.push({'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']});
+  } else {
+    required.push({'bin': 'convert', 'args': '--version', 'needs': []});
+  }
 
   return Promise.all(required.map(checkRequirement));
 }
