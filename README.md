@@ -93,7 +93,7 @@ Gifify supports streams both on command line (`cat movie.mp4 | gifify -o out.gif
 
 While it's super useful in some cases, if you have the file on disk already, you better do `gifify movie.mp4 -o out.gif` or `gifify(filePath, opts).pipe(writableStream)`.
 
-Why? Because piping 3.4GB when you want to cut from 40:20 to 40:22 still takes a loooooot of time and does not gives you any performance benefit.
+Why? Because piping 3.4GB when you want to cut from 40:20 to 40:22 still takes a loooooot of time and does not give you any performance benefit.
 
 FFmpeg has to read from 0GB -> $START_BYTE_40:20 and discards it. But everything flows in your memory.
 
