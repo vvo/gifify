@@ -26,7 +26,7 @@ gifify screencast.mkv -o screencast.gif --resize 800:-1
 
 Before using gifify, please install:
 
-- [Node.js](https://nodejs.or) (`$ brew install node`)
+- [Node.js](https://nodejs.org) (`$ brew install node`)
 - [FFmpeg](http://ffmpeg.org/) [🐓🐓🐓🐓](http://en.wikipedia.org/wiki/FFmpeg#History) (`$ brew install ffmpeg --with-libass --with-fontconfig`)
 - [convert](http://www.imagemagick.org/script/convert.php), the famous [ImageMagick](http://www.imagemagick.org/) (`$ brew install imagemagick --with-fontconfig`)
 - [pornel/giflossy](https://github.com/pornel/giflossy/releases), it's a [gifsicle](http://www.lcdf.org/gifsicle/) fork (waiting for [gifsicle#16](https://github.com/kohler/gifsicle/pull/16) to be merged). Download the zip release file, make the corresponding binary available in your $PATH.
