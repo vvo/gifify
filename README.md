@@ -60,6 +60,7 @@ npm install -g gifify
     --subtitles <filepath>  Subtitle filepath to burn to the GIF
     --text <string>         Add some text at the bottom of the movie
     --to <position>         End position, hh:mm:ss or seconds, defaults to end of movie
+    --no-loop               Will show every frame once without looping
 ```
 
 ## Programmatic usage

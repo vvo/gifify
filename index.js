@@ -173,6 +173,10 @@ function computeGifsicleArgs(opts) {
     '--no-warnings'
   ];
 
+  if (!opts.loop) {
+    args.push('--no-loopcount');
+  }
+
   debug('gifsicle args: %j', args);
 
   return args;
