@@ -1,3 +1,7 @@
+# 2.2.0 (2016-11-03)
+
+ * feat: add --no-loop avoids looping in GIF fixes #66 #68
+
 # 2.1.6 (2016-03-11)
 
  * fix: windows comes with fontconfig pre-installed in ImageMagick
@@ -25,4 +29,3 @@
 # 2.1.0 (2015-01-11)
 
   * add --text
-
