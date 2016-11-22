@@ -173,7 +173,7 @@ function computeGifsicleArgs(opts) {
     '--no-warnings'
   ];
 
-  if (!opts.loop) {
+  if (opts.loop === false) {
     args.push('--no-loopcount');
   }
 
