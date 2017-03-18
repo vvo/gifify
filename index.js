@@ -102,7 +102,7 @@ function computeFFmpegArgs(opts) {
   // framerate
   args.push('-r', opts.fps);
 
-  if (opts.resize || opts.subtitles) {
+  if (opts.resize || opts.subtitles || opts.reverse) {
     // filters
     args.push('-vf');
 
@@ -114,6 +114,10 @@ function computeFFmpegArgs(opts) {
 
     if (opts.subtitles !== undefined) {
       filters.push('subtitles=' + opts.subtitles);
+    }
+
+    if (opts.reverse !== undefined) {
+      filters.push('reverse');
     }
 
     args.push(filters.join(','));
