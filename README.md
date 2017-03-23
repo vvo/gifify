@@ -18,7 +18,7 @@ gifify screencast.mkv -o screencast.gif --resize 800:-1
 - programmatic JavaScript ([Node.JS](http://nodejs.org/)) [stream](http://nodejs.org/api/stream.html) interface
 - unix friendly, supports `stdin` & `stdout`
 - optimized! uses [pornel/giflossy](https://github.com/pornel/giflossy) to generate light GIFS
-- lots of options: movie speed, fps, colors, compression, resize, from & to, subtitles
+- lots of options: movie speed, fps, colors, compression, resize, reverse, from & to, subtitles
 - no temp files used, everything happens in memory
 - fast! Extracting a 5 seconds GIF from the middle of a 2 hours movie takes less than 20 seconds
 
@@ -56,6 +56,7 @@ npm install -g gifify
     --fps <n>               Frames Per Second, defaults to 10
     -o, --output <file>     Output file, defaults to stdout
     --resize <W:H>          Resize output, use -1 when specifying only width or height. `350:100`, `400:-1`, `-1:200`
+    --reverse               Reverses movie
     --speed <n>             Movie speed, defaults to 1
     --subtitles <filepath>  Subtitle filepath to burn to the GIF
     --text <string>         Add some text at the bottom of the movie
