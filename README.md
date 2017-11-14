@@ -20,7 +20,7 @@ gifify screencast.mkv -o screencast.gif --resize 800:-1
 - optimized! uses [pornel/giflossy](https://github.com/pornel/giflossy) to generate light GIFS
 - lots of options: movie speed, fps, colors, compression, resize, reverse, from & to, subtitles
 - no temp files used, everything happens in memory
-- fast! Extracting a 5 seconds GIF from the middle of a 2 hours movie takes less than 20 seconds
+- fast! Extracting a 5-second GIF from the middle of a 2-hour movie takes less than 20 seconds
 
 ## Requirements
 
