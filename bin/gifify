@@ -70,6 +70,10 @@ function encode() {
     }
   }
 
+  if(outputStream !== process.stdout) {
+    process.stdout.write("Generating GIF, please wait...\n");
+  }
+
   var gifStream = gifify(input, options);
   gifStream.pipe(outputStream);
   gifStream.on('error', abort.bind(null));
