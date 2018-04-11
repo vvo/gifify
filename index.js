@@ -8,6 +8,7 @@ var debug = require('debug')('gifify');
 module.exports = gifify;
 
 function gifify(streamOrFile, opts) {
+  opts = opts || {};
   if (typeof streamOrFile === 'string') {
     opts.inputFilePath = streamOrFile;
   }
