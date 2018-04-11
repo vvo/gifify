@@ -43,7 +43,3 @@ promise@^7.1.1:
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
   dependencies:
     asap "~2.0.3"
-
-whereis@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/whereis/-/whereis-0.4.0.tgz#7ace618a4b8c2a8863db36ff9f54ef8aa23d822b"

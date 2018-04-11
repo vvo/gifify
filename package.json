@@ -25,7 +25,6 @@
     "debug": "^2.5.2",
     "moment": "^2.17.1",
     "moment-duration-format": "^1.3.0",
-    "promise": "^7.1.1",
-    "whereis": "^0.4.0"
+    "promise": "^7.1.1"
   }
 }

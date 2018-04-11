@@ -4,7 +4,6 @@ var fs = require('fs');
 var path = require('path');
 var program = require('commander');
 var Promise = require('promise');
-var whereis = require('whereis');
 var exec = require('child_process').exec;
 var util = require('util');
 var colors = require('colors');
