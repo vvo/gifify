@@ -1,7 +1,9 @@
 **NOTE FROM AUTHOR**
+
 I am no more using this project or providing any support to it, if you want to maintain it, ping me here: vincent.voyer@gmail.com.
 
 This project was created 4 years ago, there might be better ways to turn a video into a GIF now, use google!
+
 **/NOTE FROM AUTHOR**
 
 # gifify
