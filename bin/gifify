@@ -98,7 +98,8 @@ function checkRequirements() {
   ];
 
   if(process.platform !== 'win32') {
-    required.push({'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']});
+    // disabled because new homebrew doesn't allow custom builds
+    // required.push({'bin': 'convert', 'args': '--version', 'needs': ['fontconfig']});
   } else {
     required.push({'bin': 'convert', 'args': '--version', 'needs': []});
   }
