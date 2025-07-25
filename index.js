@@ -143,7 +143,6 @@ function computeConvertArgs(opts) {
   // Convert options
   // http://www.imagemagick.rg/script/convert.php#options
   var args = [
-    'convert',
     '-',
     '+dither',
     '-layers', 'Optimize'
