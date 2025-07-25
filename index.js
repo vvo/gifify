@@ -44,7 +44,7 @@ function gifify(streamOrFile, opts) {
   var gifsicleArgs = computeGifsicleArgs(opts);
 
   var ffmpeg = spawn('ffmpeg', ffmpegArgs);
-  var convert = spawn('convert', convertArgs);
+  var convert = spawn('magick', convertArgs);
   var gifsicle = spawn('gifsicle', gifsicleArgs);
 
   [ffmpeg, convert, gifsicle].forEach(function handleErrors(child) {
@@ -58,11 +58,11 @@ function gifify(streamOrFile, opts) {
   // https://github.com/joyent/node/issues/8652
   ffmpeg.stdin.on('error', function ignoreStdinError(){});
 
-  // ffmpeg.stdout.on('error', function() {})
-  // convert.stdin.on('error', function(){});
-  // convert.stdout.on('error', function() {});
-  // gifsicle.stdin.on('error', function() {});
-  // gifsicle.stdout.on('error', function() {})
+  // ffmpeg.stdout.on('error', function(err) {console.log(err)})
+  // convert.stdin.on('error', function(err){console.log(err)});
+  // convert.stdout.on('error', function(err) {console.log(err)});
+  // gifsicle.stdin.on('error', function(err) {console.log(err)});
+  // gifsicle.stdout.on('error', function(err) {console.log(err)})
 
   if (!opts.inputFilePath) {
     streamOrFile.pipe(ffmpeg.stdin);
@@ -143,6 +143,7 @@ function computeConvertArgs(opts) {
   // Convert options
   // http://www.imagemagick.rg/script/convert.php#options
   var args = [
+    'convert',
     '-',
     '+dither',
     '-layers', 'Optimize'
