@@ -1,8 +1,8 @@
-var duration = require('moment').duration;
 var spawn = require('child_process').spawn;
-
-require('moment-duration-format');
-
+var moment = require('moment');
+var momentSetup = require("moment-duration-format");
+var duration = moment.duration;
+momentSetup(moment);
 var debug = require('debug')('gifify');
 
 module.exports = gifify;
