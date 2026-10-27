@@ -10,6 +10,15 @@ This project was created 4 years ago, there might be better ways to turn a video
 
 Convert any video file to an optimized animated GIF. Either in its full length or only a part of it.
 
+<p align="center">
+  <a href="https://turnshift.app/?utm_source=github&utm_medium=sponsor&utm_campaign=gifify">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./sponsor/turnshift-dark.png">
+      <img width="880" alt="Sponsored by TurnShift, the team calendar in Slack. Try it free for 14 days." src="./sponsor/turnshift-light.png">
+    </picture>
+  </a>
+</p>
+
 ## Demo time
 
 ![screencast](screencast.gif)
